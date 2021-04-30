@@ -1,0 +1,56 @@
+<div class="general-agileits-w3l">
+    <div class="w3l-medile-movies-grids">
+
+            <!-- /movie-browse-agile -->
+
+                  <div class="movie-browse-agile">
+                     <!--/browse-agile-w3ls -->
+                    <div class="browse-agile-w3ls general-w3ls">
+                            <div class="tittle-head">
+                                <h4 class="latest-text">All Movies </h4>
+                                <div class="container">
+                                    <div class="agileits-single-top">
+                                        <ol class="breadcrumb">
+                                          <li><a href="/home/content/">Content Filter</a></li>
+                                          <!--<li class="active">Genres</li>-->
+                                        </ol>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="container">
+                            {% for blog in blogs %}
+                            <div class="browse-inner">
+                            <div class="col-md-2 w3l-movie-gride-agile">
+                                     <img src="{{ blog.image.url }}" title="album-name" alt=" " />
+                                     <div class="w3l-action-icon"><i class="fa fa-play-circle" aria-hidden="true"></i></div>
+                                
+                                  <div class="mid-1">
+                                    <div class="w3l-movie-text">
+                                        <span>{{ blog.title }}</span>
+                                    </div>
+                                    <div class="mid-2">
+
+                                        <p>{{ blog.created_year }}</p>
+                                        
+                                        <div class="clearfix"></div>
+                                    </div>
+
+                                </div>
+                            </div>
+                            {% endfor %}
+                            </div>
+                        </div>
+                        <h1> {{rec.title}}</h1>
+                        <div class="clearfix"> </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <div class="footer">
+    <div class="container">
+        <div class="col-md-5 w3ls_footer_grid1_left">
+            <p> Design by <a href="http://w3layouts.com/">W3layouts</a></p>
+        </div>
+        <div class="clearfix"> </div>
+    </div>
+</div>

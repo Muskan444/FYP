@@ -1,0 +1,70 @@
+<div class="general-agileits-w3l">
+    <div class="w3l-medile-movies-grids">
+
+            <!-- /movie-browse-agile -->
+
+                  <div class="movie-browse-agile">
+                     <!--/browse-agile-w3ls -->
+                    <div class="browse-agile-w3ls general-w3ls">
+                            <div class="tittle-head">
+                                <h4 class="latest-text">All Movies </h4>
+                                <div class="container">
+                                    <div class="agileits-single-top">
+                                        <ol class="breadcrumb">
+                                          <li><a href="/home/content/">Content Filter</a></li>
+                                          <!--<li class="active">Genres</li>-->
+                                        </ol>
+                                    </div>
+                                </div>
+                            </div>
+                                 <div class="container">
+
+                        
+
+                            {% for movie in context.Data %}
+                            <div class="browse-inner">
+                            <div class="col-md-2 w3l-movie-gride-agile">
+                                     <a href="{% url 'related' movie_id=movie.id %}" class="hvr-shutter-out-horizontal"><img src="{{ movie.image.url }}" title="album-name" alt=" " />
+                                     <div class="w3l-action-icon"><i class="fa fa-play-circle" aria-hidden="true"></i></div>
+                                </a>
+                                  <div class="mid-1">
+                                    <div class="w3l-movie-text">
+                                        <span>{{ movie.short_title }}</span>
+                                    </div>
+                                    <div class="mid-2">
+
+                                        <p>{{ movie.year }}</p>
+                                        <div class="block-stars">
+                                            <ul class="w3l-ratings">
+                                                {% for i in movie.range %}
+                                                     <li><a href="#"><i class="fa fa-star" aria-hidden="true"></i></a></li>
+                                                {% endfor %}
+                                                {% if movie.half_rating %}
+                                                     <li><a href="#"><i class="fa fa-star-half-o" aria-hidden="true"></i></a></li>
+                                                {% else %}
+                                                     <li><a href="#"><i class="fa fa-star-o" aria-hidden="true"></i></a></li>
+                                                {% endif %}
+                                                {% for i in movie.white_star %}
+                                                     <li><a href="#"><i class="fa fa-star-o" aria-hidden="true"></i></a></li>
+                                                {% endfor %}
+
+
+                                            </ul>
+                                        </div>
+                                        <div class="clearfix"></div>
+                                    </div>
+
+                                </div>
+                            </div>
+                            {% endfor %}
+
+
+                            </div>
+
+
+
+
+
+                            <div class="clearfix"> </div>
+                            </div>
+                            </div>

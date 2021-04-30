@@ -1,0 +1,313 @@
+﻿{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <link rel="stylesheet" href="fonts/font-awesome.css">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="fonts/google-fonts.css">
+    <link rel="stylesheet" href="static/header.css">
+    <script src="js/jquery.js"></script>
+    <link rel="shortcut icon" href="{% static '/images/favicon.ico' %}" type="image/x-icon">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            $('.dot1').click(function () {
+                $('.vid1').css('display', 'block');
+                $('.vid2').css('display', 'none');
+                $('.vid3').css('display', 'none');
+            });
+
+            $('.dot2').click(function () {
+                $('.vid2').css('display', 'block');
+                $('.vid1').css('display', 'none');
+                $('.vid3').css('display', 'none');
+            });
+
+            $('.dot3').click(function () {
+                $('.vid3').css('display', 'block');
+                $('.vid1').css('display', 'none');
+                $('.vid2').css('display', 'none');
+            });
+
+            $(window).on('scroll load', function () {
+                if ($(window).scrollTop() > 10) {
+                    $('#header').addClass('header-active');
+                } else {
+                    $('#header').removeClass('header-active');
+                }
+            });
+        });
+    </script>
+    <style>
+        #user_heading {
+            font-size: 24px;
+            color: white;
+        }
+
+        .data{
+            padding: 1rem;
+        }
+
+        .title {
+            font-size: 3rem;
+            font-family: 'Trebuchet MS';
+            text-transform: uppercase;
+        }
+
+        .media{
+            align-content:center;
+        }
+
+        .home {
+            font-size: 1.5rem;
+            font-weight: bold;
+            text-align: center;
+            padding: 0px;
+            letter-spacing: 1.5px;
+            color: black;
+        }
+
+        .upload {
+            font-size: 1.5rem;
+            font-weight: bold;
+            text-align: center;
+            padding: 200px;
+            letter-spacing: 1.5px;
+            color: black;
+        }
+
+        .profile-box {
+            margin: 0 0 0 auto;
+            display: flex;
+            align-items: center;
+        }
+
+        .profile-image {
+            height: 35px;
+            margin: 15px;
+        }
+
+        .signUp-login {
+            margin: 0 0 0 auto;
+        }
+
+        .media { 
+            margin: 0 0 0 4rem;
+            height: 50%;
+            width: 100%;
+            -o-object-fit: cover;
+            object-fit: cover;
+        }
+
+    </style>
+    <style>
+        body {
+            height: 100%;
+            width: 100%;
+            background: black;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .searchbar {
+            padding: 0 4rem;
+            height: 3rem;
+            max-width: 500px;
+        }
+
+        .article-img {
+            border-radius: 50%;
+        }
+
+        .displayposts {
+            background: #E0E0E0;
+            border-radius: 3px;
+            margin-bottom: 20px;
+        }
+        .pagination {
+            align-items: center;
+            display: inline-block;
+        }
+        .pagination-action {
+            margin: 0 0.1em;
+            display: inline-block;
+            padding: 0.5em;
+            color: white;
+            font-size: 1.5em;
+        }
+        .pagination-action:hover {
+            color: yellow;
+        }
+        .pagination-number{
+            background-color: white;
+            padding: 0.5em 0.8em;
+            color: black;
+            border-radius: 2px;
+        }
+        .pagination-number:hover, .pagination-current {
+            background-color: yellow;
+        }
+    </style>
+    <style>
+
+        pre a {
+            font-size: 4rem;
+            font-weight: bold;
+            color: #dfdfdf;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <header id="header">
+        <div class="fas fa-hamburger"></div>
+
+        <a href="/" class="logo"><img src="/static/images/logo.png" alt=""></a>
+        <nav>
+            <ul>
+                <li><a href="/">HOME</a></li>
+                <li><a href="/create_post/">POST RECIPE</a></li>
+                <li>
+                    <div class="searchbar">
+                        <form method="get" class="form-inline my-2 my-lg-0" action="/search">
+                            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name="query" id="query">
+                            <button class="btn btn-outline-warning my-0 my-sm-0" type="submit">Search</button>
+                        </form>
+                    </div>
+                </li>
+                <li>
+                    {%if user.is_authenticated %}
+                    <div class="profile-box">
+                        <a href="/profile/">
+                            <img class='profile-image' src="/static/images/profile-icon.svg" alt="">
+                        </a>
+                        <h3 class="User-name"><a href="/profile/"> {{user.first_name}}</a></h3>
+                    </div>
+                    {% else %}
+                    <h3 class="signUp-login"><a href="/login_page/"> Login/Sign Up</a></h3>
+                    {% endif %}
+                </li>
+            </ul>
+        </nav>
+
+    </header>
+    <main>
+        {%if user.is_authenticated %}
+        <section id="special" class="container-fluid">
+
+            <div class="heading text-center">
+                <h1>Latest <span> Posts</span></h1>
+            </div>
+            <div class="container">
+            <div class="row">
+                {% csrf_token %}
+                {% for data in Foodie_Blogs %}
+                <div class="col-sm-4" style="border: 1px">
+                    <a class="card m-2" href="/detail_post/ {{ data.id }}" title="{{ data.title }}">
+                            {% if data.ImageorVideo.url|slice:"-4:" == ".mp4" %}
+                            <video width="320" height="240" controls>
+                                <source media="screen" src="{{ data.ImageorVideo.url }}">
+                            </video>
+                            {% else %}
+                            <img width="320" height="240" src="{{ data.ImageorVideo.url }}">
+                            {% endif %}
+                    </a>
+                </div>
+                {% endfor %}
+             </div>
+            </div>
+            <div class="heading text-center">
+                <h1>Popular <span> Posts</span></h1>
+            </div>
+            <div class="pagination">
+                <span class="step-links">
+                    {% if Foodie_Blogs.has_previous %}
+                    <a class="pagination-action" href="?page=1">
+                        <<<<
+                    </a>
+                    <a class="pagination-action" href="?page={{ Foodie_Blogs.previous_page_number }}">
+                        PREVIOUS
+                    </a>
+                    {% endif %}
+
+                    {% for num in Foodie_Blogs.paginator.page_range %}
+                    {% if Foodie_Blogs.number == num %}
+                        <span class="pagination-number pagination-current"> {{ num }} </span>
+                    {% elif num > Foodie_Blogs.number|add:'-3' and num < Foodie_Blogs.number|add:'-3' %}
+                        <a class="pagination-number" href="?page={{ num }}"> {{ num }} </a>
+                    {% endif %}
+                    {% endfor %}
+
+                    {% if Foodie_Blogs.has_next %}
+                        <a class="pagination-action" href="?page={{ Foodie_Blogs.next_page_number }}">
+                            NEXT
+                        </a>
+                    <a class="pagination-action" href="?page={{ Foodie_Blogs.paginator.num_pages }}">
+                        >>>>
+                    </a>
+                    {% endif %}
+                </span>
+            </div>
+
+
+        </section>
+        {% else %}
+        <section id="home" class="container-fluid">
+
+            <div class="row min-vh-100 align-items-center">
+
+                <div class="col-md-8 ml-md-5 text-md-left text-center content">
+                    <h1>food that you can't resist</h1>
+                    <h2>enjoy the marvelous taste</h2>
+                    <a href="/signup_page/">
+                        <button>Sign Up</button>
+                    </a>
+                    <a href="/login_page/">
+                        <button>Login</button>
+                    </a>
+                    </pre>
+                </div>
+
+                <div class="video-container">
+                    <video src="/static/images/vid1.mp4" autoplay loop class="vid vid1"></video>
+                    <video src="/static/images/vid2.mp4" autoplay loop class="vid vid2"></video>
+                    <video src="/static/images/vid3.mp4" autoplay loop class="vid vid3"></video>
+                </div>
+
+                <div class="controls">
+                    <div class="dots dot1"></div>
+                    <div class="dots dot2"></div>
+                    <div class="dots dot3"></div>
+                </div>
+
+            </div>
+
+        </section>
+        {% endif %}
+    </main>
+
+    {% for message in messages %}
+    <script>
+        window.onload = function () {
+            ('{{message}}')
+        }
+    </script>
+<script>
+    var num = function(v) {
+	return parseInt(v, 10) || 0;
+};
+</script>
+    {% endfor %}
+    <footer class="py-3 bg-white">
+        <p class="m-0 text-dark text-center ">Copyright &copy; FOODIE</p>
+    </footer>
+</body>
+</html>
+
+

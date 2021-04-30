@@ -1,0 +1,250 @@
+﻿{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detail Post</title>
+
+    <link rel="stylesheet" href="/static/header.css">
+
+
+    <link rel="shortcut icon" href="{% static '/images/favicon.ico' %}" type="image/x-icon">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+
+    <style>
+        #user_heading {
+            font-size: 24px;
+            color: white;
+        }
+
+        .home {
+            font-size: 1.5rem;
+            font-weight: bold;
+            text-align: center;
+            padding: 0px;
+            letter-spacing: 1.5px;
+            color: black;
+        }
+
+        .upload {
+            font-size: 1.5rem;
+            font-weight: bold;
+            text-align: center;
+            padding: 200px;
+            letter-spacing: 1.5px;
+            color: black;
+        }
+
+        .profile-box {
+            margin: 0 0 0 auto;
+            display: flex;
+            align-items: center;
+        }
+
+        .profile-image {
+            height: 35px;
+            margin: 15px;
+        }
+
+        .signUp-login {
+            margin: 0 0 0 auto;
+        }
+
+        .media {
+            margin: 0 0 0 4rem;
+        }
+    </style>
+    <style>
+        body {
+            height: 100%;
+            width: 100%;
+            background: black;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .searchbar {
+            padding: 0 4rem;
+            height: 3rem;
+            max-width: 500px;
+        }
+
+        .article-img {
+            border-radius: 50%;
+        }
+
+        .displayposts {
+            background: #E0E0E0;
+            border-radius: 3px;
+            margin-bottom: 20px;
+        }
+    </style>
+    <style>
+        .posts {
+            padding-left: 20.5rem;
+            padding-right: 20.5rem;
+            padding-top: 8.5rem;
+            background-color: black;
+        }
+        .card-body {
+            background-color: black;
+            color: white;
+        }
+        .card-title {
+            font-family: 'Lucida Sans';
+            font-size: 5rem;
+            text-align: center;
+            color: yellow;
+        }
+        .comment {
+            font-family: 'Times New Roman', Times, serif;
+            font-size: 2rem;
+            font-weight: bold;
+        }
+        .author {
+            font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+            font-size: 2rem;
+            text-align: center;
+        }
+        .center {
+            margin-left: auto;
+            margin-right: auto;
+            display: block
+        }
+        .ingredients {
+            font-size: 3rem;
+            color: whitesmoke;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .post-thumb img {
+         border-radius: 30px;
+         margin-bottom: 30px;
+        }
+    </style>
+</head>
+<body>
+    <header id="header">
+        <div class="fas fa-hamburger"></div>
+
+        <a href="/" class="logo"><img src="/static/images/logo.png" alt=""></a>
+        <nav>
+            <ul>
+                <li><a href="/">HOME</a></li>
+                <li><a href="/create_post/">POST RECIPE</a></li>
+                <li>
+                    <div class="searchbar">
+                        <form method="get" class="form-inline my-2 my-lg-0" action="/search">
+                            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name="query" id="query">
+                            <button class="btn btn-outline-warning my-2 my-sm-0" type="submit">Search</button>
+                        </form>
+                    </div>
+                </li>
+                <li>
+                    {%if user.is_authenticated %}
+                    <div class="profile-box">
+                        <a href="/profile/">
+                            <img class='profile-image' src="/static/images/profile-icon.svg" alt="">
+                        </a>
+                        <h3 class="User-name"><a href="/profile/"> {{user.first_name}}</a></h3>
+                    </div>
+                    {% else %}
+                    <h3 class="signUp-login"><a href="/login_page/"> Login/Sign Up</a></h3>
+                    {% endif %}
+                </li>
+            </ul>
+        </nav>
+
+    </header>
+    <div class="posts">
+        <article action="" method="get">
+            {% csrf_token %}
+            <div class="col-md-15 blogShort">
+                <div class="card u-clearfix">
+                    <div class="card-body">
+
+
+                        <h1 class="card-title">{{ data.title }}</h1>
+                        <h3 class="author"> BY {{data.Author}}</h3><h2>Rating: {{ average }}/5</h2>
+                        <div class="post-thumb">
+                            {% if data.ImageorVideo.url|slice:"-4:" == ".mp4" %}
+                            <video width="1056" height="528" controls class="center">
+                                <source media="screen" src="{{ data.ImageorVideo.url }}">
+                            </video>
+                            {% else %}
+                            <img width="1056" height="528" src="{{ data.ImageorVideo.url }}" class="center">
+                            {% endif %}
+
+                        </div>
+                        <span class="card-description subtle">
+                            <h3 class="ingredients">  INGREDIENTS: </h3>
+                            <div class="col-lg-10 pull-center"><h3 class="card-read"> {{ data.ingredients|linebreaksbr }}</h3></div>
+
+                            <div class="col-lg-10 pull-center">
+                                <h3 class="ingredients">RECIPE:  </h3>
+                                <h3 class="card-reading">
+                                    {{ data.recipe|linebreaksbr }}
+                                </h3>
+                            </div>
+                        </span>
+                    </div>
+                </div>
+                <div class="card-shadow"></div>
+            </div>
+        </article>
+    </div>
+    <br>
+    <div class="card">
+        <div class="card-body">
+            <h3 class="text-center"> Add Review</h3>
+            <form action="{% url 'addreview' data.id %}" method="POST">
+                {% csrf_token %}
+                <h3 class="comment">Review</h3>
+                <textarea name="comment" id="comment" cols="30" rows="5" class="form-control"></textarea>
+
+                <label class="comment" for="rating">Rating</label>
+                <input type="range" id="rangeInput"
+                       name="rating" min="0" max="5" value="0" step="0.5"
+                       oninput="amount.value=rangeInput.value">
+
+                <output name="amount" id="amount" for="rangeInput">0</output>
+
+                <br>
+                <input type="submit" class="btn btn-outline-warning my-2 my-sm-0" value="Add Review">
+            </form>
+            <a href="/recommendations">Euclidean Recommendations</a>
+            <a href="/simrecommendations">Cosine similarity Recommendations</a>
+        </div>
+    </div>
+    <br>
+    <div class="card">
+        <div class="card-read" style="background-color: #f5eeee;">
+            <h3 class="text-center">Reviews</h3>
+            {% for review in reviews %}
+            <div class="card" style="background-color: #f5eeee;">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-2">
+                            <h1 class="data"> <img class="article-img" height="50" width="50" src="{{review.user.profile.image.url }}">  {{review.user.username}}  </h1>
+                            <p class="comment">{{ review.comment }}</p>
+                        </div>
+                        <div class="comment">
+                            <h5>{{ review.rating }}</h5>
+                        </div>
+                        <div class="col-md-2">
+                            <h7>In {{review.pub_date}}</h7>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br>
+            {% endfor %}
+        </div>
+    </div>
+</body>
+
+</html>
